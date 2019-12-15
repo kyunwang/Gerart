@@ -1,20 +1,18 @@
 import p5 from 'p5/lib/p5.min.js';
 
-new p5(initSketch);
-
 const config = {
 	height: 500,
 	width: 500,
 };
 
-function initSketch(sk) {
+function initSketch(sk, { height, width }) {
 	const { HSB } = sk;
 	let stepX;
 	let stepY;
 
 	sk.setup = () => {
-		sk.createCanvas(config.height, config.width);
-		sk.colorMode(HSB, config.width, config.height, 100);
+		sk.createCanvas(height, width);
+		sk.colorMode(HSB, width, height, 100);
 		sk.noStroke();
 	};
 
@@ -32,3 +30,5 @@ function initSketch(sk) {
 		}
 	};
 }
+
+new p5(sk => initSketch(sk, config));
