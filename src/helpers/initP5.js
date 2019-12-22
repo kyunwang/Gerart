@@ -25,8 +25,8 @@ function initSketch(cb, config) {
 				// Save canvas as png/gif?
 			}
 
-			if (events.keyPressed) {
-				events.keyPressed();
+			if (newConfig.events.keyPressed) {
+				newConfig.events.keyPressed();
 			}
 		};
 
