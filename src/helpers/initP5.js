@@ -15,6 +15,10 @@ function initSketch(cb, config) {
 		newConfig = {
 			...newConfig,
 			...config,
+			events: {
+				...newConfig.events,
+				...config.events,
+			},
 		};
 	}
 
@@ -22,11 +26,14 @@ function initSketch(cb, config) {
 		sk.keyPressed = event => {
 			// On shift + s
 			if (sk.keyIsDown(16) && sk.keyIsDown(83)) {
+				console.log('Save');
+
 				// Save canvas as png/gif?
 			}
+			// console.log(sk.key, sk.keyCode);
 
 			if (newConfig.events.keyPressed) {
-				newConfig.events.keyPressed();
+				newConfig.events.keyPressed(sk, event);
 			}
 		};
 
