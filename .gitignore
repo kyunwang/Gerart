@@ -3,3 +3,5 @@ node_modules
 static
 public
 dist
+lib
+web_modules
