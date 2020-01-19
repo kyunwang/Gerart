@@ -48,11 +48,11 @@ function TestSketch() {
 			);
 			sphere.position.y = 0;
 
-			// const ground = MeshBuilder.CreateGround('ground1', {
-			// 	height: 6,
-			// 	width: 6,
-			// 	subdivisions: 2,
-			// });
+			const ground = MeshBuilder.CreateGround('ground1', {
+				height: 6,
+				width: 6,
+				subdivisions: 2,
+			});
 
 			return scene;
 		};
@@ -62,8 +62,6 @@ function TestSketch() {
 			stencil: true,
 		});
 		const scene = createScene(engine);
-
-		console.log(scene);
 
 		engine.runRenderLoop(() => {
 			scene.render();
@@ -75,9 +73,7 @@ function TestSketch() {
 	}, []);
 
 	return (
-		// <main className={styleClass}>
 		<canvas ref={canvasRef} className={styleClass} id="renderCanvas"></canvas>
-		// </main>
 	);
 }
 

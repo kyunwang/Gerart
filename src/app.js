@@ -1,17 +1,47 @@
-import 'https://cdn.jsdelivr.net/npm/p5';
+// import 'https://cdn.jsdelivr.net/npm/p5';
 
-import { h, Component, render } from 'preact';
-import { Route, Switch } from 'wouter-preact';
-import Home from './pages/Home.js';
-import Sketches from './pages/Sketches.js';
+import { h, render, Fragment, Component } from 'preact';
+import Router from 'preact-router';
+import LazyRoute from 'preact-lazy-route';
 
-// const HomePage = lazy(() => import('./pages/Home'));
+const pagePaths = [{ path: '/', filePath: './pages/HomePage.js' }];
 
-const App = (
-	<Switch>
-		<Route path="/" component={Home} />
-		<Route path="/sketches" component={Sketches} />
-	</Switch>
-);
+class App extends Component {
+	constructor(props) {
+		super(props);
 
-render(App, document.getElementById('app'));
+		this.state = {
+			sketches: [],
+		};
+	}
+
+	componentDidMount() {
+		fetch('../test.json')
+			.then(data => data.json())
+			.then(sketches => {
+				this.setState({ sketches });
+			});
+	}
+
+	render(props, { sketches }) {
+		return (
+			<Router>
+				{pagePaths.map(({ path, filePath }) => (
+					<LazyRoute path={path} component={() => import(filePath)} />
+				))}
+
+				{sketches.length > 0 &&
+					sketches.map(sketch => (
+						<LazyRoute
+							path={`/sketches/${sketch.slug}`}
+							component={() => import(`./${sketch.path}`)}
+						/>
+					))}
+			</Router>
+		);
+	}
+}
+
+render(<App />, document.getElementById('app'));
+
+console.log(123456);
