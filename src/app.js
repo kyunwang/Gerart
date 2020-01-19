@@ -1,6 +1,17 @@
-import { h, Component, render } from '/web_modules/preact.js';
+import 'https://cdn.jsdelivr.net/npm/p5';
 
-const app = h('div', null, 'Hello World~!');
-console.log(123);
+import { h, Component, render } from 'preact';
+import { Route, Switch } from 'wouter-preact';
+import Home from './pages/Home.js';
+import Sketches from './pages/Sketches.js';
 
-render(app, document.getElementById('app'));
+// const HomePage = lazy(() => import('./pages/Home'));
+
+const App = (
+	<Switch>
+		<Route path="/" component={Home} />
+		<Route path="/sketches" component={Sketches} />
+	</Switch>
+);
+
+render(App, document.getElementById('app'));

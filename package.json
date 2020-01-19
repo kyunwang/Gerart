@@ -7,14 +7,17 @@
 	"description": "",
 	"keywords": [],
 	"scripts": {
-		"start": "npm run dev",
-		"dev": "npm-run-all -p watch:js serve",
-		"serve": "live-server . --watch src --no-browser",
-		"watch:js": "babel src/ --watch --out-dir lib/",
-		"prebuild": "babel src -d lib",
+		"build:esm:dev": "snowpack --dest dist/web_modules",
 		"build": "npm-run-all -l -s prebuild  \"snowpack --optimize\"",
+		"clean:dev": "rimraf dist",
+		"dev": "npm-run-all -p watch:js server",
+		"postinstall": "npm run snowpack",
+		"prebuild": "babel src -d dist",
+		"serve": "live-server . --watch src --no-browser",
+		"server": "lite-server",
 		"snowpack": "snowpack",
-		"postinstall": "npm run snowpack"
+		"start": "npm-run-all clean:dev build:esm:dev dev",
+		"watch:js": "babel --extensions \".js,.jsx\" src/ -d dist/ --watch --copy-files"
 	},
 	"repository": {
 		"type": "git",
@@ -27,7 +30,10 @@
 	"devDependencies": {
 		"@babel/cli": "^7.8.0",
 		"@babel/core": "^7.8.0",
+		"@babel/plugin-transform-react-jsx": "^7.8.3",
 		"@babel/preset-env": "^7.8.0",
+		"babel-plugin-module-resolver": "^4.0.0",
+		"lite-server": "^2.5.4",
 		"live-server": "^1.2.1",
 		"npm-run-all": "^4.1.5",
 		"rimraf": "^3.0.0",
@@ -36,8 +42,24 @@
 		"snowpack": "^1.0.3"
 	},
 	"dependencies": {
+		"@babylonjs/core": "^4.0.3",
+		"babylonjs": "^4.0.3",
 		"csz": "^1.1.1",
 		"p5": "^0.10.2",
-		"preact": "^10.2.1"
+		"preact": "^10.2.1",
+		"preact-router": "^3.1.0",
+		"wouter-preact": "^2.4.0"
+	},
+	"snowpack": {
+		"webDependencies": [
+			"preact",
+			"preact/hooks",
+			"preact/compat",
+			"preact-router",
+			"csz",
+			"babylonjs",
+			"wouter-preact",
+			"@babylonjs/core"
+		]
 	}
 }
